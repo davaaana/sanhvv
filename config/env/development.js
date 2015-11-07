@@ -22,7 +22,7 @@ module.exports = {
     }
   },
   app: {
-    title: defaultEnvConfig.app.title + ' - Development Environment'
+    title: defaultEnvConfig.app.title + ' - Хөгжүүлэлтийн орчин'
   },
   facebook: {
     clientID: process.env.FACEBOOK_ID || '877515282345759',

@@ -19,31 +19,30 @@ module.exports = {
       tests: ['public/lib/angular-mocks/angular-mocks.js']
     },
     css: [
-      'modules/*/client/css/*.css'
+      'public/modules/*/css/*.css'
     ],
     less: [
-      'modules/*/client/less/*.less'
+      'public/modules/*/less/*.less'
     ],
     sass: [
-      'modules/*/client/scss/*.scss'
+      'public/modules/*/scss/*.scss'
     ],
     js: [
-      'modules/core/client/app/config.js',
-      'modules/core/client/app/init.js',
-      'modules/*/client/*.js',
-      'modules/*/client/**/*.js'
+      'public/modules/core/app/config.js',
+      'public/modules/core/app/init.js',
+      'public/modules/*/*.js',
+      'public/modules/**/*.js'
     ],
-    views: ['modules/*/client/views/**/*.html']
+    views: ['public/modules/*/views/**/*.html']
   },
   server: {
     gruntConfig: 'gruntfile.js',
     gulpConfig: 'gulpfile.js',
-    allJS: ['server.js', 'config/**/*.js', 'modules/*/server/**/*.js'],
-    models: 'modules/*/server/models/**/*.js',
-    routes: ['modules/!(core)/server/routes/**/*.js', 'modules/core/server/routes/**/*.js'],
-    sockets: 'modules/*/server/sockets/**/*.js',
-    config: 'modules/*/server/config/*.js',
-    policies: 'modules/*/server/policies/*.js',
-    views: 'modules/*/server/views/*.html'
+    allJS: ['server.js', 'config/**/*.js', 'app/**/*.js'],
+    models: 'app/model/*.js',
+    routes: ['app/route/*.js'],
+    config: ['config/users.server.config.js'],
+    policies: 'app/policy/*.js',
+    views: 'app/view/*.html'
   }
 };

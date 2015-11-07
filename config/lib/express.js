@@ -63,7 +63,7 @@ module.exports.initMiddleware = function (app) {
   }));
 
   // Initialize favicon middleware
-  app.use(favicon('./modules/core/client/img/brand/favicon.ico'));
+  //app.use(favicon('./modules/core/client/img/brand/favicon.ico'));
 
   // Environment dependent middleware
   if (process.env.NODE_ENV === 'development') {
@@ -152,7 +152,7 @@ module.exports.initModulesClientRoutes = function (app) {
 
   // Globbing static routing
   config.folders.client.forEach(function (staticPath) {
-    app.use(staticPath.replace('/client', ''), express.static(path.resolve('./' + staticPath)));
+    app.use(express.static(path.resolve('./' + staticPath)));
   });
 };
 
@@ -197,13 +197,7 @@ module.exports.initErrorRoutes = function (app) {
 /**
  * Configure Socket.io
  */
-module.exports.configureSocketIO = function (app, db) {
-  // Load the Socket.io configuration
-  var server = require('./socket.io')(app, db);
 
-  // Return server object
-  return server;
-};
 
 /**
  * Initialize the Express application
@@ -243,7 +237,7 @@ module.exports.init = function (db) {
   this.initErrorRoutes(app);
 
   // Configure Socket.io
-  app = this.configureSocketIO(app, db);
+  //app = this.configureSocketIO(app, db);
 
   return app;
 };
