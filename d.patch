@@ -1,0 +1,13 @@
+Index: config/assets/development.js
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>windows-1252
+===================================================================
+--- config/assets/development.js	(revision )
++++ config/assets/development.js	(revision )
+@@ -0,0 +1,5 @@
++'use strict';
++
++module.exports = {
++  // Development assets
++};
