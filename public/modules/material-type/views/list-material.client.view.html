@@ -1,0 +1,20 @@
+<section data-ng-controller="MaterialTypeController" data-ng-init="find()">
+  <div class="page-header">
+    <h1>Материалын төрлүүд</h1>
+  </div>
+  <div class="list-group">
+    <a data-ng-repeat="material in materialTypes" data-ui-sref="materialType.view({materialId: material._id})" class="list-group-item">
+      <small class="list-group-item-text">
+        Үүсгэсэн
+        <span data-ng-bind="material.createdDate | date:'yyyy/MM/dd'"></span>
+        by
+        <span data-ng-bind="material.user.displayName"></span>
+      </small>
+      <h4 class="list-group-item-heading" data-ng-bind="material.name"></h4>
+      <p class="list-group-item-text" data-ng-bind="material.name"></p>
+    </a>
+  </div>
+  <div class="alert alert-warning text-center" data-ng-if="material.$resolved && !materials.length">
+    No articles yet, why don't you <a data-ui-sref="material.create">create one</a>?
+  </div>
+</section>

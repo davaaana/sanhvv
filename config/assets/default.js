@@ -39,10 +39,10 @@ module.exports = {
     gruntConfig: 'gruntfile.js',
     gulpConfig: 'gulpfile.js',
     allJS: ['server.js', 'config/**/*.js', 'app/**/*.js'],
-    models: 'app/model/*.js',
+    models: ['app/model/*.js'],
     routes: ['app/route/*.js'],
     config: ['config/users.server.config.js'],
-    policies: 'app/policy/*.js',
+    policies: ['app/policy/*.js'],
     views: 'app/view/*.html'
   }
 };
