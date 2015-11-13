@@ -1,0 +1,163 @@
+<section data-ng-controller="InvMaterialCreditController">
+    <div class="page-header">
+        <h1>Бэлэн бүтээгдэхүүний орлого үүсгэх</h1>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="form-group">
+                <label class="control-label" for="date">Огноо</label>
+
+                <div class="controls">
+                    <input name="name" type="date" data-ng-model="date" id="date" class="form-control"
+                           placeholder="Огноо">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <form class="form-horizontal">
+                <fieldset>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label class="control-label" for="material">Бүтээгдэхүүн</label>
+
+                            <div class="controls">
+                                <select class="form-control" data-ng-model="type" id="material">
+                                    <option data-ng-repeat="type in types" value="{{type._id}}">{{type.name}}</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label class="control-label" for="unit">Жин</label>
+
+                            <div class="controls">
+                                <select id="unit" data-ng-model="unit" class="form-control">
+                                    <option value="Тн">Тн</option>
+                                    <option value="Кг">Кг</option>
+                                    <option value="Ш">Ш</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label class="control-label" for="qty">Тоо ширхэг</label>
+
+                            <div class="controls">
+                                <input type="number" data-ng-model="qty" class="form-control" id="qty">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <div class="controls">
+                                <label class="control-label" for="add">нэмэх</label>
+                                <button class="form-control" id="add" data-ng-click="invMaterialAdd(type,unit,qty)">Нэмэх</button>
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            <td>Бүтээгдэхүүн</td>
+            <td>Жин</td>
+            <td>Тоо ширхэг</td>
+            <td>Засах</td>
+            <td>Устгах</td>
+        </tr>
+        </thead>
+        <tbody>
+            <tr data-ng-repeat="material in invMaterialsCreate">
+                <td>{{getMaterialName(material.materialType)}}</td>
+                <td>{{material.unit}}</td>
+                <td>{{material.qty}}</td>
+                <td>
+                    <a class="btn btn-primary" data-ng-click="createEdit(material);">
+                        <i class="glyphicon glyphicon-edit"></i>
+                    </a>
+                </td>
+                <td>
+                    <a class="btn btn-primary" data-ng-click="createRemove($index);">
+                        <i class="glyphicon glyphicon-trash"></i>
+                    </a>
+                </td>
+            </tr>
+        </tbody>
+        <tfoot>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td><button data-ng-click="create();">Нэгтгэх</button></td>
+        </tr>
+        </tfoot>
+    </table>
+    <!--<div class="col-md-4">-->
+    <!--<form name="articleForm" class="form-horizontal" data-ng-submit="create()" novalidate>-->
+    <!--<fieldset>-->
+    <!--<div class="form-group">-->
+    <!--<label class="control-label" for="date">Огноо</label>-->
+    <!--<div class="controls">-->
+    <!--&lt;!&ndash;<uib-datepicker ng-model="dt" min-date="minDate" show-weeks="true" class="well well-sm" custom-class="getDayClass(date, mode)"></uib-datepicker>&ndash;&gt;-->
+    <!--<input name="name" type="date" data-ng-model="date" id="date" class="form-control" placeholder="Огноо">-->
+    <!--</div>-->
+    <!--</div>-->
+    <!--<div class="form-group">-->
+    <!--<label class="control-label" for="materialType">Түүхий эд</label>-->
+    <!--<div class="controls">-->
+    <!--<select name="materialType" type="datetime" data-ng-model="materialType" id="materialType" class="form-control" placeholder="Түүхий эд">-->
+    <!--<option data-ng-repeat="type in materialTypes" value="{{type._id}}">{{type.name}}</option>-->
+    <!--</select>-->
+    <!--</div>-->
+    <!--</div>-->
+
+    <!--<div class="form-group">-->
+    <!--<label class="control-label" for="qty">Хэмжээ</label>-->
+    <!--<div class="controls">-->
+    <!--<input name="qty" type="number" data-ng-model="qty" id="qty" class="form-control" placeholder="Хэмжээ"/>-->
+    <!--</div>-->
+    <!--</div>-->
+
+    <!--<div class="form-group">-->
+    <!--<label class="control-label" for="amount">Мөнгөн дүн</label>-->
+    <!--<div class="controls">-->
+    <!--<input name="amount" type="number" data-ng-model="amount" id="amount" class="form-control" placeholder="Мөнгөн дүн"/>-->
+    <!--</div>-->
+    <!--</div>-->
+
+    <!--<div class="form-group">-->
+    <!--<label class="control-label" for="description">Тайлбар</label>-->
+    <!--<div class="controls">-->
+    <!--<input name="description" type="text" data-ng-model="description" id="description" class="form-control" placeholder="Тайлбар"/>-->
+    <!--</div>-->
+    <!--</div>-->
+
+    <!--<div class="form-group">-->
+    <!--<label class="control-label" for="unit">Хэмжих нэгж</label>-->
+    <!--<div class="controls">-->
+    <!--<select name="unit" data-ng-model="unit" id="unit" class="form-control" placeholder="Хэмжих нэгж">-->
+    <!--<option value="Кг">Кг</option>-->
+    <!--<option value="Тн">Тн</option>-->
+    <!--<option value="Ш">Ш</option>-->
+    <!--</select>-->
+    <!--</div>-->
+    <!--</div>-->
+
+    <!--<div class="form-group">-->
+    <!--<input type="submit" class="btn btn-default">-->
+    <!--</div>-->
+    <!--<div data-ng-show="error" class="text-danger">-->
+    <!--<strong data-ng-bind="error"></strong>-->
+    <!--</div>-->
+    <!--</fieldset>-->
+    <!--</form>-->
+    <!--</div>-->
+</section>

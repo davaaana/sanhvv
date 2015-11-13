@@ -1,0 +1,17 @@
+<section data-ng-controller="RawMaterialTotalController" data-ng-init="findTotal()">
+    <div class="page-header">
+        <h1>Түүхийн эдийн нийт үлдэгдэл клограммаар</h1>
+    </div>
+    <table class="table table-bordered">
+        <thead class="">
+        <td>Нэр</td>
+        <td>Үлдэгдэл тоо хэмжээ</td>
+        </thead>
+        <tbody>
+        <tr class="list-group" data-ng-repeat="m in totalMaterials">
+            <td>{{typeGetName(m._id)}}</td>
+            <td>{{m.total}}-Кг</td>
+        </tr>
+        </tbody>
+    </table>
+</section>

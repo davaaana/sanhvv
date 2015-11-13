@@ -18,3 +18,23 @@
 
   <pagination boundary-links="true" max-size="8" items-per-page="itemsPerPage" total-items="filterLength" ng-model="currentPage" ng-change="pageChanged()"></pagination>
 </section>
+
+<div id="category" class="modal fade">
+  <div class="modal-dialog">
+    <div class="modal-content" style="    width: 285px;">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 style="color: #000000">asdsad</h4>
+      </div>
+      <div class="modal-body">
+        <form>
+          <input type="text" data-ng-model="category.name" style="border: 1px solid gray; color:gray">
+          <center>
+            <button data-ng-click="updateCategory()" data-ng-show="updateBtn" class="btn btn-primary">Засах</button>
+            <button data-ng-click="createCategory()" data-ng-hide="updateBtn" class="btn btn-primary">Нэмэх</button>
+          </center>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
