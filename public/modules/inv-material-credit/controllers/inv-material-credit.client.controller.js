@@ -28,6 +28,12 @@ angular.module('invMaterialCredit').controller('InvMaterialCreditController', ['
       }
     }
 
+    $scope.findTotal = function () {
+      $http.get('api/rawMaterialDebitTotal').success(function (res) {
+        $scope.totalMaterials = res;
+      });
+    };
+
     $scope.createRemove = function (index) {
       $scope.invMaterialsCreate.splice(index, 1);
     };
@@ -58,25 +64,53 @@ angular.module('invMaterialCredit').controller('InvMaterialCreditController', ['
       if(type && unit && qty && qty > 0){
         var marge = false;
         var index = 0;
-        for(var i in $scope.invMaterialsCreate){
-          if($scope.invMaterialsCreate[i].materialType == type){
-            marge = true;
-            index = i;
+        var valid = true;
+
+        for(var i in $scope.totalMaterials){
+          if($scope.totalMaterials[i]._id == type){
+            switch (unit){
+              case 'Тн' :
+                    if($scope.totalMaterials[i].total < (qty*1000)){
+                      alert('Үлдэгдэл хүрэлцэхгүй байна боломжит үлдэгдэл: ' + $scope.totalMaterials[i].total);
+                      valid = false;
+                    }
+                    break;
+              case 'Кг' :
+                if($scope.totalMaterials[i].total < (qty)){
+                  alert('Үлдэгдэл хүрэлцэхгүй байна боломжит үлдэгдэл: ' + $scope.totalMaterials[i].total);
+                  valid = false;
+                }
+
+                break;
+              case 'Ш' :
+                if($scope.totalMaterials[i].total < (qty*25)){
+                  alert('Үлдэгдэл хүрэлцэхгүй байна боломжит үлдэгдэл: ' + $scope.totalMaterials[i].total);
+                  valid = false;
+                }
+                break;
+            }
           }
         }
-        if(marge == false){
-          $scope.invMaterialsCreate.push({materialType:type,unit:unit,qty:qty});
-        }else{
-          $scope.invMaterialsCreate[index] = angular.extend({}, $scope.invMaterialsCreate[index], {materialType:type,unit:unit,qty:qty})
-        }
+        if(valid == true){
+          for(var i in $scope.invMaterialsCreate){
+            if($scope.invMaterialsCreate[i].materialType == type){
+              marge = true;
+              index = i;
+            }
+          }
+          if(marge == false){
+            $scope.invMaterialsCreate.push({materialType:type,unit:unit,qty:qty});
+          }else{
+            $scope.invMaterialsCreate[index] = angular.extend({}, $scope.invMaterialsCreate[index], {materialType:type,unit:unit,qty:qty})
+          }
 
-        for (var i in $scope.types) {
-          if ($scope.types[i]._id === type) {
-            $scope.types.splice(i, 1);
+          for (var i in $scope.types) {
+            if ($scope.types[i]._id === type) {
+              $scope.types.splice(i, 1);
+            }
           }
         }
       }
-
     }
 
     // Remove existing Article

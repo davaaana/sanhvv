@@ -1,44 +1,45 @@
 <section data-ng-controller="InvMaterialCreditController" data-ng-init="find()">
-  <div class="page-header">
-    <h1>Түүхийн эдийн орлогын жагсаалт</h1>
-  </div>
-  <table class="table table-bordered">
-    <thead class="">
-      <td>Задаргаа</td>
-      <td>Орлого хийсэн өдөр</td>
-      <td>Засах</td>
-      <td>Устгах</td>
-    </thead>
-    <tbody data-ng-repeat="material in rawMaterialDebits" data-ng-init="items_display=[];indexx = $index">
-    <tr class="list-group" data-ng-click="items_display[indexx] = !items_display[indexx]">
-      <td>+</td>
-      <td>{{material.date | date:'yyyy/MM/dd'}}</td>
-      <td><a class="btn btn-primary" data-ui-sref="rawMaterialDebit.edit({id: material._id})">
-        <i class="glyphicon glyphicon-edit"></i>
-      </a>
-        </td>
-      <td>
-        <a class="btn btn-primary" data-ng-click="remove(material);">
-          <i class="glyphicon glyphicon-trash"></i>
-        </a></td>
-      </td>
-    </tr>
-    <!--<div >-->
-    <tr data-ng-show="items_display[indexx]">
-      <td></td>
-      <td>
-        Материалын төрөл
-      </td>
-      <td>Хэмжих нэгж</td>
-      <td>Тоо хэмжээ</td>
-    </tr>
-      <tr data-ng-show="items_display[indexx]" data-ng-repeat="measure in material.measure">
-      <td></td>
-      <td>{{measure.materialType}}</td>
-      <td>{{measure.unit}}</td>
-      <td>{{measure.qty}}</td>
-    </tr>
-    <!--</div>-->
-    </tbody>
-  </table>
+    <div class="page-header">
+        <h1>Түүхийн эдийн орлогын жагсаалт</h1>
+    </div>
+    <table class="table table-bordered">
+        <thead class="">
+        <td>Задаргаа</td>
+        <td>Орлого хийсэн өдөр</td>
+        <td>Засах</td>
+        <td>Устгах</td>
+        </thead>
+        <tbody data-ng-repeat="material in rawMaterialDebits" data-ng-init="items_display=[];indexx = $index">
+        <tr class="list-group" data-ng-click="items_display[indexx] = !items_display[indexx]">
+            <td>
+                <span data-ng-hide="items_display[indexx]">+</span>
+                <span data-ng-show="items_display[indexx]">-</span>
+            </td>
+            <td>{{material.date | date:'yyyy/MM/dd'}}</td>
+            <td><a class="btn btn-primary" data-ui-sref="rawMaterialDebit.edit({id: material._id})">
+                <i class="glyphicon glyphicon-edit"></i>
+            </a>
+            </td>
+            <td>
+                <a class="btn btn-primary" data-ng-click="remove(material);">
+                    <i class="glyphicon glyphicon-trash"></i>
+                </a></td>
+            </td>
+        </tr>
+        <tr data-ng-show="items_display[indexx]">
+            <td></td>
+            <td>
+                Материалын төрөл
+            </td>
+            <td>Хэмжих нэгж</td>
+            <td>Тоо хэмжээ</td>
+        </tr>
+        <tr data-ng-show="items_display[indexx]" data-ng-repeat="measure in material.measure">
+            <td></td>
+            <td>{{getMaterialName(measure.materialType)}}</td>
+            <td>{{measure.unit}}</td>
+            <td>{{measure.qty}}</td>
+        </tr>
+        </tbody>
+    </table>
 </section>

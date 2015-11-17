@@ -28,7 +28,6 @@ var RawMaterialDebitSchema = new Schema(
         },
         qty:{
             type:Number,
-            validate:[validateLocalStrategyNumber,'Зөвхөн тоо оруулана уу?'],
             required:'Та тоо хэмжээгээ оруулана уу?'
         },
         description:{
@@ -39,9 +38,9 @@ var RawMaterialDebitSchema = new Schema(
             required:'Та үнийн дүнг заавал оруулана уу?'
         },
         unit:{
-            type:String,
+            type:Schema.ObjectId,
             required:'Та хэмжих нэгж заавал оруулана уу?',
-            enum:['Кг','Тн','Ш']
+            ref:'Unit'
         },
         user: {
             type: Schema.ObjectId,

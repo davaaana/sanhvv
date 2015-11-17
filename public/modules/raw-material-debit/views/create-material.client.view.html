@@ -29,6 +29,15 @@
         </div>
 
         <div class="form-group">
+          <label class="control-label" for="unit">Хэмжих нэгж</label>
+          <div class="controls">
+            <select name="unit" data-ng-model="unit" id="unit" class="form-control" placeholder="Хэмжих нэгж">
+              <option data-ng-repeat="u in units" value="{{u._id}}">{{u.name}}</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
           <label class="control-label" for="amount">Мөнгөн дүн</label>
           <div class="controls">
             <input name="amount" type="number" data-ng-model="amount" id="amount" class="form-control" placeholder="Мөнгөн дүн"/>
@@ -39,17 +48,6 @@
           <label class="control-label" for="description">Тайлбар</label>
           <div class="controls">
             <input name="description" type="text" data-ng-model="description" id="description" class="form-control" placeholder="Тайлбар"/>
-          </div>
-        </div>
-
-        <div class="form-group">
-          <label class="control-label" for="unit">Хэмжих нэгж</label>
-          <div class="controls">
-            <select name="unit" data-ng-model="unit" id="unit" class="form-control" placeholder="Хэмжих нэгж">
-              <option value="Кг">Кг</option>
-              <option value="Тн">Тн</option>
-              <option value="Ш">Ш</option>
-            </select>
           </div>
         </div>
 

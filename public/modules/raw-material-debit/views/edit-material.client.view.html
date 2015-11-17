@@ -9,7 +9,7 @@
           <label class="control-label" for="date">Огноо</label>
           <div class="controls">
             <!--<uib-datepicker ng-model="dt" min-date="minDate" show-weeks="true" class="well well-sm" custom-class="getDayClass(date, mode)"></uib-datepicker>-->
-            <input name="name" type="date" data-ng-model="rawMaterialDebit.date | date:'yyyy/mm/dd'" id="date" class="form-control" placeholder="Огноо">
+            <input name="name" type="date" data-ng-model="rawMaterialDebit.date" id="date" class="form-control" placeholder="Огноо">
           </div>
         </div>
         <div class="form-group">
@@ -45,10 +45,8 @@
         <div class="form-group">
           <label class="control-label" for="unit">Хэмжих нэгж</label>
           <div class="controls">
-            <select name="unit" data-ng-model="rawMaterialDebit.unit" id="unit" class="form-control" placeholder="Хэмжих нэгж">
-              <option value="Кг">Кг</option>
-              <option value="Тн">Тн</option>
-              <option value="Ш">Ш</option>
+            <select name="unit" data-ng-model="rawMaterialDebit.unit" id="unit" ng-options="u.name for u in units track by u._id" class="form-control">
+              <!--<option data-ng-repeat="u in units" value="{{u._id}}">{{u.name}}</option>-->
             </select>
           </div>
         </div>

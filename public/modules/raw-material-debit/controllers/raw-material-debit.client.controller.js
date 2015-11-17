@@ -9,6 +9,10 @@ angular.module('rawMaterialDebit').controller('RawMaterialDebitController', ['$s
         $scope.materialTypes = res;
     });
 
+    $http.get('api/unit').success(function (res) {
+      $scope.units = res;
+    });
+
     $scope.create = function () {
       // Create new Article object
       var materialType = new RawMaterialDebitSrv({
@@ -70,6 +74,8 @@ angular.module('rawMaterialDebit').controller('RawMaterialDebitController', ['$s
       $scope.rawMaterialDebit = RawMaterialDebitSrv.get({
         id: $stateParams.id
       });
+
+
     };
   }
 ]);

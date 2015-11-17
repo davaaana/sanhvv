@@ -18,5 +18,15 @@ angular.module('materialType').run(['Menus',
             title: 'Материал үүсгэх',
             state: 'materialType.create'
         });
+
+        Menus.addSubMenuItem('topbar', 'materialType', {
+            title: 'Хэмжих нэгжийн жагсаалт',
+            state: 'unit.list'
+        });
+
+        Menus.addSubMenuItem('topbar', 'materialType', {
+            title: 'Хэмжих нэгжийн үүсгэх',
+            state: 'unit.create'
+        });
     }
 ]);

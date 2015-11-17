@@ -14,11 +14,8 @@ angular.module('rawMaterialDebit').controller('RawMaterialTotalController', ['$s
         }
 
         $scope.findTotal = function () {
-            $http.get('api/rawMaterialDebitTotal').success(function (res) {
-                $scope.totalMaterials = res;
-            });
             $http.get('api/materials').success(function (res) {
-                $scope.materialTypes = res;
+                $scope.totalMaterials = res;
             });
         };
     }

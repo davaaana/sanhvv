@@ -7,27 +7,27 @@ var mongoose = require('mongoose'),
     Schema = mongoose.Schema,
     validator = require('validator');
 
-var MaterialTypeSchema = new Schema(
+var UnitSchema = new Schema(
     {
         name: {
             type: String,
             trim: true,
-            unique: 'Үүссэн материалын төрөл байна',
-            required:'Та материалын нэр заавал оруулах ёстой'
+            unique: 'Үүссэн хэмжигдэхүүн байна',
+            required:'Та хэмжигдэхүүн заавал оруулах ёстой'
         },
         createdDate:{
             type:Date,
             default:new Date()
         },
-        user: {
-            type: Schema.ObjectId,
-            ref: 'User'
-        },
         qty:{
             type: Number,
             default:0
+        },
+        user: {
+            type: Schema.ObjectId,
+            ref: 'User'
         }
     }
 );
 
-mongoose.model('MaterialType', MaterialTypeSchema);
+mongoose.model('Unit', UnitSchema);

@@ -6,6 +6,7 @@ module.exports = function (app) {
   require('../../app/route/materials.server.routes.js')(app);
   require('../../app/route/raw-material-debit.server.routes.js')(app);
   require('../../app/route/inv-material-credit.server.routes.js')(app);
+  require('../../app/route/unit.server.routes.js')(app);
 
   // Define error pages
   app.route('/server-error').get(core.renderServerError);

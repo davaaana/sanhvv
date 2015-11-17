@@ -16,8 +16,8 @@
     <tbody>
     <tr class="list-group" data-ng-repeat="material in rawMaterialDebits">
       <td>{{material.materialType.name}}</td>
-      <td>{{material.unit}}</td>
-      <td>{{material.qty}}</td>
+      <td>{{material.unit.name}}</td>
+      <td>{{material.qty / material.unit.qty}}</td>
       <td>{{material.amount}}</td>
       <td>{{material.amount * material.qty}}</td>
       <td>{{material.date | date:'yyyy/MM/dd'}}</td>
