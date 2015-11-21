@@ -13,28 +13,28 @@ exports.invokeRolesPolicies = function () {
     acl.allow([{
         roles: ['admin'],
         allows: [{
-            resources: '/api/invMaterialCredit',
+            resources: '/api/product',
             permissions: ['get','post']
         }, {
-            resources: '/api/invMaterialCredit/:imcid',
+            resources: '/api/product/:id',
             permissions: '*'
         }]
     }, {
         roles: ['user'],
         allows: [{
-            resources: '/api/invMaterialCredit',
+            resources: '/api/product',
             permissions: ['get']
         }, {
-            resources: '/api/invMaterialCredit/:imcid',
+            resources: '/api/product/:id',
             permissions: ['get']
         }]
     }, {
         roles: ['guest'],
         allows: [{
-            resources: '/api/invMaterialCredit',
+            resources: '/api/product',
             permissions: ['get']
         }, {
-            resources: '/api/invMaterialCredit/:imcid',
+            resources: '/api/product/:id',
             permissions: ['get']
         }]
     }]);
@@ -43,7 +43,7 @@ exports.invokeRolesPolicies = function () {
 exports.isAllowed = function (req, res, next) {
     var roles = (req.user) ? req.user.roles : ['guest'];
 
-    if (req.rawMaterialDebit && req.user && req.rawMaterialDebit.user.id === req.user.id) {
+    if (req.product && req.user && req.product.user.id === req.user.id) {
         return next();
     }
 

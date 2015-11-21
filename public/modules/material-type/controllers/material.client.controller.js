@@ -4,7 +4,11 @@
 angular.module('materialType').controller('MaterialTypeController', ['$scope', '$stateParams', '$location', 'Authentication', 'MaterialType',
   function ($scope, $stateParams, $location, Authentication, MaterialType) {
     $scope.authentication = Authentication;
+
+
     // Create new Article
+      $scope.qty = 0;
+      $scope.amount = 0;
     $scope.create = function () {
       // Create new Article object
       var materialType = new MaterialType({

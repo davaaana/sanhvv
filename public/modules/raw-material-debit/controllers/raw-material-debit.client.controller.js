@@ -4,6 +4,7 @@
 angular.module('rawMaterialDebit').controller('RawMaterialDebitController', ['$scope', '$stateParams', '$location', 'Authentication', 'RawMaterialDebitSrv','$http',
   function ($scope, $stateParams, $location, Authentication, RawMaterialDebitSrv,$http) {
     $scope.authentication = Authentication;
+    $scope.date = new Date();
 
     $http.get('api/materials').success(function (res) {
         $scope.materialTypes = res;
@@ -58,7 +59,7 @@ angular.module('rawMaterialDebit').controller('RawMaterialDebitController', ['$s
       var rawMaterialDebit = $scope.rawMaterialDebit;
 
       rawMaterialDebit.$update(function () {
-        $location.path('rmd/' + rawMaterialDebit._id);
+        $location.path('rmd/' + rawMaterialDebit._id+'/view');
       }, function (errorResponse) {
         $scope.error = errorResponse.data.message;
       });
@@ -74,7 +75,7 @@ angular.module('rawMaterialDebit').controller('RawMaterialDebitController', ['$s
       $scope.rawMaterialDebit = RawMaterialDebitSrv.get({
         id: $stateParams.id
       });
-
+      $scope.total = $scope.rawMaterialDebit.qty * $scope.rawMaterialDebit.amount;
 
     };
   }

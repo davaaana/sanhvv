@@ -4,6 +4,8 @@
 angular.module('invMaterialCredit').controller('InvMaterialCreditController', ['$scope', '$stateParams', '$location', 'Authentication', 'InvMaterialCreditSrv','$http',
   function ($scope, $stateParams, $location, Authentication, InvMaterialCreditSrv,$http) {
     $scope.authentication = Authentication;
+
+    $scope.date = new Date();
     $scope.invMaterialsCreate = [];
     $scope.types = [];
     $http.get('api/materials').success(function (res) {
@@ -14,27 +16,28 @@ angular.module('invMaterialCredit').controller('InvMaterialCreditController', ['
     });
 
     $scope.createEdit = function (material) {
+      $scope.types.push(material.materialType);
       $scope.type = material.materialType;
       $scope.unit = material.unit;
       $scope.qty = material.qty;
     };
 
     $scope.getMaterialName = function (id) {
-      console.log('id: '+id);
-      console.log($scope.materialTypes);
       for(var i in $scope.materialTypes){
         if($scope.materialTypes[i]._id == id)
           return $scope.materialTypes[i].name;
       }
     }
 
-    $scope.findTotal = function () {
-      $http.get('api/rawMaterialDebitTotal').success(function (res) {
-        $scope.totalMaterials = res;
+      $http.get('api/unit').success(function (res) {
+        $scope.units = res;
       });
-    };
 
-    $scope.createRemove = function (index) {
+    $http.get('api/product').success(function (res) {
+      $scope.products = res;
+    });
+    $scope.createRemove = function (index,material) {
+      $scope.types.push(material.materialType);
       $scope.invMaterialsCreate.splice(index, 1);
     };
 
@@ -42,7 +45,11 @@ angular.module('invMaterialCredit').controller('InvMaterialCreditController', ['
       // Create new Article object
       var materialType = new InvMaterialCreditSrv({
         date: this.date,
-        measure: this.invMaterialsCreate
+        measure: this.invMaterialsCreate,
+        qty:this.pqty,
+        unit:this.punit,
+        product:this.product
+
       });
 
       // Redirect after save
@@ -65,29 +72,17 @@ angular.module('invMaterialCredit').controller('InvMaterialCreditController', ['
         var marge = false;
         var index = 0;
         var valid = true;
+        console.log(type);
+        for(var i in $scope.materialTypes){
+          if($scope.materialTypes[i]._id == type._id){
+            if($scope.materialTypes[i].qty < (qty * unit.qty)){
+              valid = false;
+              if($scope.materialTypes[i].qty == 0){
+                alert('Үлдэгдэл '+$scope.materialTypes[i].qty+' байгаа тул та '+$scope.materialTypes[i].name+' материал дээр орлого хийнэ үү')
+              }else{
+                alert('Үлдэгдэл хүрэлцэхгүй байна боломжин хэмжээ ('+$scope.materialTypes[i].qty+')-Кг')
+              }
 
-        for(var i in $scope.totalMaterials){
-          if($scope.totalMaterials[i]._id == type){
-            switch (unit){
-              case 'Тн' :
-                    if($scope.totalMaterials[i].total < (qty*1000)){
-                      alert('Үлдэгдэл хүрэлцэхгүй байна боломжит үлдэгдэл: ' + $scope.totalMaterials[i].total);
-                      valid = false;
-                    }
-                    break;
-              case 'Кг' :
-                if($scope.totalMaterials[i].total < (qty)){
-                  alert('Үлдэгдэл хүрэлцэхгүй байна боломжит үлдэгдэл: ' + $scope.totalMaterials[i].total);
-                  valid = false;
-                }
-
-                break;
-              case 'Ш' :
-                if($scope.totalMaterials[i].total < (qty*25)){
-                  alert('Үлдэгдэл хүрэлцэхгүй байна боломжит үлдэгдэл: ' + $scope.totalMaterials[i].total);
-                  valid = false;
-                }
-                break;
             }
           }
         }
@@ -105,7 +100,7 @@ angular.module('invMaterialCredit').controller('InvMaterialCreditController', ['
           }
 
           for (var i in $scope.types) {
-            if ($scope.types[i]._id === type) {
+            if ($scope.types[i]._id === type._id) {
               $scope.types.splice(i, 1);
             }
           }

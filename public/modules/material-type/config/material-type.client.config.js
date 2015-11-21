@@ -28,5 +28,15 @@ angular.module('materialType').run(['Menus',
             title: 'Хэмжих нэгжийн үүсгэх',
             state: 'unit.create'
         });
+
+        Menus.addSubMenuItem('topbar', 'materialType', {
+            title: 'Бэлэн бүтээгдэхүүний жагсаалт',
+            state: 'product.list'
+        });
+
+        Menus.addSubMenuItem('topbar', 'materialType', {
+            title: 'Бэлэн бүтээгдэхүүн нэмэх',
+            state: 'product.create'
+        });
     }
 ]);

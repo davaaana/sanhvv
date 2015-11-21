@@ -1,0 +1,20 @@
+<section data-ng-controller="ProductController" data-ng-init="find()">
+  <div class="page-header">
+    <h1>Материалын төрлүүд</h1>
+  </div>
+  <div class="list-group">
+    <a data-ng-repeat="product in products" data-ui-sref="product.view({id: material._id})" class="list-group-item">
+      <small class="list-group-item-text">
+        Үүсгэсэн
+        <span data-ng-bind="product.createdDate | date:'yyyy/MM/dd'"></span>
+        by
+        <span data-ng-bind="product.user.displayName"></span>
+      </small>
+      <h4 class="list-group-item-heading" data-ng-bind="product.name"></h4>
+      <p class="list-group-item-text" data-ng-bind="product.name"></p>
+    </a>
+  </div>
+  <div class="alert alert-warning text-center" data-ng-if="product.$resolved && !product.length">
+    No articles yet, why don't you <a data-ui-sref="product.create">create one</a>?
+  </div>
+</section>

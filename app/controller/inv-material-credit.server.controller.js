@@ -6,7 +6,11 @@
 var path = require('path'),
     mongoose = require('mongoose'),
     Material = mongoose.model('InvMaterialCredit'),
+    MaterialType = mongoose.model('MaterialType'),
+    Unit = mongoose.model('Unit'),
+    Util = require('util'),
     errorHandler = require(path.resolve('./app/controller/errors.server.controller'));
+var async = require('async');
 
 /**
  * Create a article
@@ -14,16 +18,46 @@ var path = require('path'),
 exports.create = function (req, res) {
     var invMaterial = new Material(req.body);
     invMaterial.user = req.user;
-
-    invMaterial.save(function (err) {
-        if (err) {
-            return res.status(400).send({
-                message: errorHandler.getErrorMessage(err)
-            });
-        } else {
-            res.json(invMaterial);
+    async.waterfall([
+            function (callback) {
+                invMaterial.save(function (err) {
+                    if (err) {
+                        return res.status(400).send({
+                            message: errorHandler.getErrorMessage(err)
+                        });
+                    } else {
+                        callback(null, invMaterial.measure);
+                    }
+                });
+            }, function (measures, callback) {
+                console.log(measures);
+                async.each(measures, function (data, mcallback) {
+                    MaterialType.findById(data.materialType).exec(function (err, result) {
+                        Unit.findOne({_id: data.unit}).exec(function (error, rs) {
+                            console.log(rs);
+                            result.qty = result.qty - (rs.qty * data.qty);
+                            result.save(function (err) {
+                                mcallback(null);
+                            });
+                        });
+                    });
+                }, function (err) {
+                    if (Util.isNullOrUndefined(err)) {
+                    } else {
+                        res.status(400).json({message: 'Хадгалахад алдаа гарлаа'});
+                    }
+                });
+                callback(null, 'success');
+            }
+        ], function (err, result) {
+            if (Util.isNullOrUndefined(err)) {
+                res.json(invMaterial);
+            } else {
+                res.status(400).json({message: 'Хадгалахад алдаа гарлаа'});
+            }
         }
-    });
+    )
+
 };
 
 /**
@@ -61,24 +95,55 @@ exports.update = function (req, res) {
  * Delete an article
  */
 exports.delete = function (req, res) {
-    var material = req.invMaterialCredit;
+    var invMaterial = req.invMaterialCredit;
 
-    material.remove(function (err) {
-        if (err) {
-            return res.status(400).send({
-                message: errorHandler.getErrorMessage(err)
-            });
-        } else {
-            res.json(material);
+    async.waterfall([
+            function (callback) {
+                invMaterial.remove(function (err) {
+                    if (err) {
+                        return res.status(400).send({
+                            message: errorHandler.getErrorMessage(err)
+                        });
+                    } else {
+                        callback(null,invMaterial.measure)
+                    }
+                });
+            }, function (measures, callback) {
+                console.log(measures);
+                async.each(measures, function (data, mcallback) {
+                    MaterialType.findById(data.materialType).exec(function (err, result) {
+                        Unit.findOne({_id: data.unit}).exec(function (error, rs) {
+                            console.log(rs);
+                            result.qty = result.qty + (rs.qty * data.qty);
+                            result.save(function (err) {
+                                mcallback(null);
+                            });
+                        });
+                    });
+                }, function (err) {
+                    if (Util.isNullOrUndefined(err)) {
+                    } else {
+                        res.status(400).json({message: 'Хадгалахад алдаа гарлаа'});
+                    }
+                });
+                callback(null, 'success');
+            }
+        ], function (err, result) {
+            if (Util.isNullOrUndefined(err)) {
+                res.json(invMaterial);
+            } else {
+                res.status(400).json({message: 'Хадгалахад алдаа гарлаа'});
+            }
         }
-    });
+    )
+
 };
 
 /**
  * List of Articles
  */
 exports.lists = function (req, res) {
-    Material.find().sort('-createdDate').populate('user', 'displayName').populate('materialType','name').exec(function (err, material) {
+    Material.find().sort('-createdDate').populate('user', 'displayName').populate('measure.materialType', 'name _id').populate('measure.unit', 'name _id').populate('unit', 'name _id').populate('product', 'name _id').exec(function (err, material) {
         if (err) {
             return res.status(400).send({
                 message: errorHandler.getErrorMessage(err)
@@ -96,16 +161,18 @@ exports.RawMaterialDebitFindById = function (req, res, next, id) {
 
     if (!mongoose.Types.ObjectId.isValid(id)) {
         return res.status(400).send({
-            message: 'Материалын төрлийн дугаар алга байна'
+            message: 'Барааны дугаар алга байна'
         });
     }
-
-    Material.findById(id).populate('user', 'displayName').populate('materialType', 'name').exec(function (err, material) {
+    console.log('id: ' + id);
+    Material.findById(id).populate('user', 'displayName').populate('measure.materialType', 'name _id').populate('measure.unit', 'name _id').populate('unit', 'name _id').populate('product', 'name _id').exec(function (err, material) {
+        console.log(material._id);
         if (err) {
             return next(err);
-        } else if (!material) {
+        } else if (Util.isNullOrUndefined(material)) {
+            console.log('not found');
             return res.status(404).send({
-                message: 'Материалын төрөл олдсонгүй'
+                message: 'Тухайн бараа устсан эсвэл бааз дээр алга байна'
             });
         }
         req.invMaterialCredit = material;

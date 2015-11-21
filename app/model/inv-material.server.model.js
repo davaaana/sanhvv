@@ -7,6 +7,7 @@ var mongoose = require('mongoose'),
     Schema = mongoose.Schema,
     validator = require('validator');
 
+
 var validateLocalStrategyNumber = function (qty) {
     return ((this.provider !== 'local' && !this.updated) || validator.isNumeric(qty));
 };
@@ -21,6 +22,20 @@ var InvMaterialCreditSchema = new Schema(
             type: Date,
             required: 'Өдөрөө сонгоно уу?'
         },
+        product: {
+            type: Schema.ObjectId,
+            ref: 'Product',
+            required:'Та бүтээгдэхүүний нэрээ сонгоно уу?'
+        },
+        unit: {
+            type: Schema.ObjectId,
+            ref: 'Unit',
+            required: 'Та хэмжих нэгжээ сонгоно уу?'
+        },
+        qty: {
+            type: Number,
+            required: 'Та тоо хэмжээгээ оруулана уу?'
+        },
         measure: [{
             materialType: {
                 type: Schema.ObjectId,
@@ -33,9 +48,9 @@ var InvMaterialCreditSchema = new Schema(
                 required: 'Та тоо хэмжээгээ оруулана уу?'
             },
             unit: {
-                type: String,
-                required: 'Та хэмжих нэгж заавал оруулана уу?',
-                enum: ['Кг', 'Тн', 'Ш']
+                type: Schema.ObjectId,
+                ref: 'Unit',
+                required: 'Та хэмжих нэгжээ сонгоно уу?'
             }
         }
         ],

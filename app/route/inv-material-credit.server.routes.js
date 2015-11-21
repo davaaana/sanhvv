@@ -14,12 +14,12 @@ module.exports = function (app) {
 
 
     // Single article routes
-    app.route('/api/invMaterialCredit/:id')
+    app.route('/api/invMaterialCredit/:imcid')
         .all(invMaterialCreditPolicy.isAllowed)
         .get(invMaterialCredit.read)
         .put(invMaterialCredit.update)
         .delete(invMaterialCredit.delete);
 
     // Finish by binding the article middleware
-    app.param('id', invMaterialCredit.RawMaterialDebitFindById);
+    app.param('imcid', invMaterialCredit.RawMaterialDebitFindById);
 };
