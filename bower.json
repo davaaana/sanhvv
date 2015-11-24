@@ -14,6 +14,7 @@
     "angular-file-upload": "1.1.5",
     "angular-block-ui": "~0.2.2",
     "bootstrap3-dialog": "~1.34.7",
+    "jquery": "2.1.4",
     "oclazyload": "~1.0.8"
   },
   "resolutions": {

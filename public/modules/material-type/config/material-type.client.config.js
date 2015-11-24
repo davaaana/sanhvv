@@ -2,7 +2,7 @@ angular.module('materialType').run(['Menus',
     function (Menus) {
         // Add the articles dropdown item
         Menus.addMenuItem('topbar', {
-            title: 'Материалын төрөл',
+            title: 'Материал',
             state: 'materialType',
             type: 'dropdown'
         });

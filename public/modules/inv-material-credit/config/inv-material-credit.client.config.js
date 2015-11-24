@@ -2,21 +2,33 @@ angular.module('rawMaterialDebit').run(['Menus',
     function (Menus) {
         // Add the articles dropdown item
         Menus.addMenuItem('topbar', {
-            title: 'Түүхийн эд үйлдвэрлэх',
+            title: 'Бэлэн бүтээгдэхүүн',
             state: 'invMaterialCredit',
             type: 'dropdown'
         });
 
         // Add the dropdown list item
         Menus.addSubMenuItem('topbar', 'invMaterialCredit', {
-            title: 'Түүхийн эдийн үйлдвэрлэлийн жагсаалт',
+            title: 'Орлогын жагсаалт',
             state: 'invMaterialCredit.list'
         });
 
         // Add the dropdown create item
         Menus.addSubMenuItem('topbar', 'invMaterialCredit', {
-            title: 'Түүхийн эдийн үйлдвэрлэл үүсгэх',
+            title: 'Орлогын бүртгэл',
             state: 'invMaterialCredit.create'
+        });
+
+        // Add the dropdown create item
+        Menus.addSubMenuItem('topbar', 'invMaterialCredit', {
+            title: 'Зарлагын бүртгэл',
+            state: 'invoiceDebit.create'
+        });
+
+        // Add the dropdown create item
+        Menus.addSubMenuItem('topbar', 'invMaterialCredit', {
+            title: 'Зарлагын жагсаалт',
+            state: 'invoiceDebit.list'
         });
     }
 ]);

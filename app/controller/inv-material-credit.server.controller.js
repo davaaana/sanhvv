@@ -6,6 +6,7 @@
 var path = require('path'),
     mongoose = require('mongoose'),
     Material = mongoose.model('InvMaterialCredit'),
+    Product = mongoose.model('Product'),
     MaterialType = mongoose.model('MaterialType'),
     Unit = mongoose.model('Unit'),
     Util = require('util'),
@@ -30,7 +31,6 @@ exports.create = function (req, res) {
                     }
                 });
             }, function (measures, callback) {
-                console.log(measures);
                 async.each(measures, function (data, mcallback) {
                     MaterialType.findById(data.materialType).exec(function (err, result) {
                         Unit.findOne({_id: data.unit}).exec(function (error, rs) {
@@ -48,6 +48,15 @@ exports.create = function (req, res) {
                     }
                 });
                 callback(null, 'success');
+            }, function (arg,callback) {
+                Product.findById(invMaterial.product).exec(function (err, data) {
+                    Unit.findOne({_id: invMaterial.unit}).exec(function (error, rs) {
+                        data.qty = data.qty + (invMaterial.qty * rs.qty);
+                        data.save(function (err) {
+                            callback(null);
+                        });
+                    });
+                });
             }
         ], function (err, result) {
             if (Util.isNullOrUndefined(err)) {
@@ -105,7 +114,7 @@ exports.delete = function (req, res) {
                             message: errorHandler.getErrorMessage(err)
                         });
                     } else {
-                        callback(null,invMaterial.measure)
+                        callback(null, invMaterial.measure)
                     }
                 });
             }, function (measures, callback) {
@@ -127,7 +136,16 @@ exports.delete = function (req, res) {
                     }
                 });
                 callback(null, 'success');
-            }
+            }, function (arg,callback) {
+            Product.findById(invMaterial.product).exec(function (err, data) {
+                Unit.findOne({_id: invMaterial.unit}).exec(function (error, rs) {
+                    data.qty = data.qty - (invMaterial.qty * rs.qty);
+                    data.save(function (err) {
+                        callback(null);
+                    });
+                });
+            });
+        }
         ], function (err, result) {
             if (Util.isNullOrUndefined(err)) {
                 res.json(invMaterial);

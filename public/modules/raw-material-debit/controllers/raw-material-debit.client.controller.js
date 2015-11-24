@@ -28,12 +28,23 @@ angular.module('rawMaterialDebit').controller('RawMaterialDebitController', ['$s
 
       // Redirect after save
       materialType.$save(function (response) {
-        $location.path('rmd/' + response._id+'/view');
+          BootstrapDialog.show({
+              size: BootstrapDialog.SIZE_SMALL,
+              title: 'Мессэж',
+              type:BootstrapDialog.TYPE_SUCCESS,
+              message: 'Амжилттай хадгаллаа'
+          });
 
         // Clear form fields
         $scope.name = '';
       }, function (errorResponse) {
         $scope.error = errorResponse.data.message;
+          BootstrapDialog.show({
+              size: BootstrapDialog.SIZE_SMALL,
+              title: 'Мессэж',
+              type:BootstrapDialog.TYPE_DANGER,
+              message: 'Хадгалахал алдаа гарлаа'
+          });
       });
     };
 
@@ -41,7 +52,12 @@ angular.module('rawMaterialDebit').controller('RawMaterialDebitController', ['$s
     $scope.remove = function (rawMaterialDebit) {
       if (rawMaterialDebit) {
         rawMaterialDebit.$remove();
-
+          BootstrapDialog.show({
+              size: BootstrapDialog.SIZE_SMALL,
+              title: 'Мессэж',
+              type:BootstrapDialog.TYPE_SUCCESS,
+              message: 'Амжилттай устгагдлаа'
+          });
         for (var i in $scope.rawMaterialDebits) {
           if ($scope.rawMaterialDebits[i] === rawMaterialDebit) {
             $scope.rawMaterialDebits.splice(i, 1);

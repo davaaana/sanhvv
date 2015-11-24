@@ -22,6 +22,10 @@ var ProductSchema = new Schema(
         user: {
             type: Schema.ObjectId,
             ref: 'User'
+        },
+        qty:{
+            type:Number,
+            default:0
         }
     }
 );

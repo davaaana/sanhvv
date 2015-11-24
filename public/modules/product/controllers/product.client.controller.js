@@ -14,11 +14,22 @@ angular.module('product').controller('ProductController', ['$scope', '$statePara
       // Redirect after save
       product.$save(function (response) {
         $location.path('product/' + response._id);
-
+          BootstrapDialog.show({
+              size: BootstrapDialog.SIZE_SMALL,
+              title: 'Мессэж',
+              type:BootstrapDialog.TYPE_SUCCESS,
+              message: 'Амжилттай хадгаллаа'
+          });
         // Clear form fields
         $scope.name = '';
       }, function (errorResponse) {
         $scope.error = errorResponse.data.message;
+          BootstrapDialog.show({
+              size: BootstrapDialog.SIZE_SMALL,
+              title: 'Мессэж',
+              type:BootstrapDialog.TYPE_DANGER,
+              message: 'Хадгалахад алдаа гарлаа'
+          });
       });
     };
 
@@ -34,7 +45,12 @@ angular.module('product').controller('ProductController', ['$scope', '$statePara
         }
       } else {
         $scope.product.$remove(function () {
-          $location.path('product');
+            BootstrapDialog.show({
+                size: BootstrapDialog.SIZE_SMALL,
+                title: 'Мессэж',
+                type:BootstrapDialog.TYPE_SUCCESS,
+                message: 'Амжилттай устгагдлаа'
+            });
         });
       }
     };
@@ -44,9 +60,20 @@ angular.module('product').controller('ProductController', ['$scope', '$statePara
       var product = $scope.product;
 
       product.$update(function () {
-        $location.path('product/' + product._id);
+          BootstrapDialog.show({
+              size: BootstrapDialog.SIZE_SMALL,
+              title: 'Мессэж',
+              type:BootstrapDialog.TYPE_SUCCESS,
+              message: 'Амжилттай хадгаллаа'
+          });
       }, function (errorResponse) {
         $scope.error = errorResponse.data.message;
+          BootstrapDialog.show({
+              size: BootstrapDialog.SIZE_SMALL,
+              title: 'Мессэж',
+              type:BootstrapDialog.TYPE_SUCCESS,
+              message: 'Хадгалахад алдаа гарлаа'
+          });
       });
     };
 

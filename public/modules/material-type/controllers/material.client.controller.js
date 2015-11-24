@@ -17,12 +17,21 @@ angular.module('materialType').controller('MaterialTypeController', ['$scope', '
 
       // Redirect after save
       materialType.$save(function (response) {
-        $location.path('materialTypes/' + response._id);
-
-        // Clear form fields
+          BootstrapDialog.show({
+              size: BootstrapDialog.SIZE_SMALL,
+              title: 'Мессэж',
+              type:BootstrapDialog.TYPE_SUCCESS,
+              message: 'Амжилттай хадгаллаа'
+          });
         $scope.name = '';
       }, function (errorResponse) {
         $scope.error = errorResponse.data.message;
+          BootstrapDialog.show({
+              size: BootstrapDialog.SIZE_SMALL,
+              title: 'Мессэж',
+              type:BootstrapDialog.TYPE_DANGER,
+              message: 'Хадгалахад алдаа гарлаа'
+          });
       });
     };
 
@@ -38,7 +47,12 @@ angular.module('materialType').controller('MaterialTypeController', ['$scope', '
         }
       } else {
         $scope.materialType.$remove(function () {
-          $location.path('materialTypes');
+            BootstrapDialog.show({
+                size: BootstrapDialog.SIZE_SMALL,
+                title: 'Мессэж',
+                type:BootstrapDialog.TYPE_SUCCESS,
+                message: 'Амжилттай устгагдалаа'
+            });
         });
       }
     };
@@ -46,10 +60,21 @@ angular.module('materialType').controller('MaterialTypeController', ['$scope', '
     // Update existing Article
     $scope.update = function () {
       var materialType = $scope.materialType;
-
+        BootstrapDialog.show({
+            size: BootstrapDialog.SIZE_SMALL,
+            title: 'Мессэж',
+            type:BootstrapDialog.TYPE_SUCCESS,
+            message: 'Амжилттай хадгаллаа'
+        });
       materialType.$update(function () {
         $location.path('materialTypes/' + materialType._id);
       }, function (errorResponse) {
+          BootstrapDialog.show({
+              size: BootstrapDialog.SIZE_SMALL,
+              title: 'Мессэж',
+              type:BootstrapDialog.TYPE_DANGER,
+              message: 'Хадгалахад алдаа гарлаа'
+          });
         $scope.error = errorResponse.data.message;
       });
     };

@@ -1,0 +1,17 @@
+<section data-ng-controller="ReportController">
+    <div class="page-header">
+        <h1>Бэлэн бүтээгдэхүүний үлдэгдэл</h1>
+    </div>
+    <table class="table table-bordered">
+        <thead class="">
+        <td>Нэр</td>
+        <td>Үлдэгдэл тоо хэмжээ</td>
+        </thead>
+        <tbody>
+        <tr class="list-group" data-ng-repeat="p in productTotal">
+            <td>{{p.name}}</td>
+            <td>{{p.qty}}-Кг</td>
+        </tr>
+        </tbody>
+    </table>
+</section>

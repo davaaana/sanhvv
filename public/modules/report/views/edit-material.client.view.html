@@ -1,0 +1,23 @@
+<section data-ng-controller="MaterialTypeController" data-ng-init="findOne()">
+  <div class="page-header">
+    <h1>Материалын төрөл засах</h1>
+  </div>
+  <div class="col-md-12">
+    <form name="articleForm" class="form-horizontal" data-ng-submit="update()" novalidate>
+      <fieldset>
+        <div class="form-group">
+          <label class="control-label" for="name">Нэр</label>
+          <div class="controls">
+            <input name="name" type="text" data-ng-model="materialType.name" id="name" class="form-control" placeholder="Нэр" required>
+          </div>
+        </div>
+        <div class="form-group">
+          <input type="submit" value="Update" class="btn btn-default">
+        </div>
+        <div data-ng-show="error" class="text-danger">
+          <strong data-ng-bind="error"></strong>
+        </div>
+      </fieldset>
+    </form>
+  </div>
+</section>

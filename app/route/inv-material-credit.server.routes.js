@@ -4,7 +4,8 @@
  * Module dependencies.
  */
 module.exports = function (app) {
-    var invMaterialCreditPolicy = require('../policy/inv-material-credit.server.policy'),
+    var
+        invMaterialCreditPolicy = require('../policy/inv-material-credit.server.policy'),
         invMaterialCredit = require('../controller/inv-material-credit.server.controller');
 
     // Articles collection routes
