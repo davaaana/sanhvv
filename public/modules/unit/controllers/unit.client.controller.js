@@ -15,10 +15,21 @@ angular.module('unit').controller('UnitController', ['$scope', '$stateParams', '
       // Redirect after save
       unit.$save(function (response) {
         $location.path('unit/' + response._id);
-
-        // Clear form fields
+          BootstrapDialog.show({
+              size: BootstrapDialog.SIZE_SMALL,
+              title: 'Мессэж',
+              type:BootstrapDialog.TYPE_SUCCESS,
+              message: 'Амжилттай хадгаллаа'
+          });
+          GlobalFunction.formClear();
         $scope.name = '';
       }, function (errorResponse) {
+          BootstrapDialog.show({
+              size: BootstrapDialog.SIZE_SMALL,
+              title: 'Мессэж',
+              type:BootstrapDialog.TYPE_DANGER,
+              message: 'Хадгалахад алдаа гарлаа'
+          });
         $scope.error = errorResponse.data.message;
       });
     };

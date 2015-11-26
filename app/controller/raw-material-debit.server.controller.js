@@ -7,6 +7,7 @@ var path = require('path'),
     mongoose = require('mongoose'),
     Material = mongoose.model('RawMaterialDebit'),
     MaterialType = mongoose.model('MaterialType'),
+    TimeLine = mongoose.model('TimeLine'),
     config = require('../controller/config.js'),
     errorHandler = require(path.resolve('./app/controller/errors.server.controller'));
 var request = require('request');
@@ -44,7 +45,16 @@ exports.create = function (req, res) {
                                         message: errorHandler.getErrorMessage(err)
                                     });
                                 } else {
-                                    res.json(rawMaterial);
+                                    var time = {
+                                        message:'Түүхий эд нэмсэн',
+                                        user:req.user,
+                                        ipAddress:req.connection.remoteAddress,
+                                        date:Date.now()
+                                    };
+                                    var timeLine = new TimeLine(time);
+                                    timeLine.save(function (err, data) {
+                                        res.json(rawMaterial);
+                                    });
                                 }
                             });
                         }
@@ -107,7 +117,16 @@ exports.update = function (req, res) {
                                     message: errorHandler.getErrorMessage(err)
                                 });
                             } else {
-                                res.json(materialType);
+                                var time = {
+                                    message:'Түүхий эд зассан',
+                                    user:req.user,
+                                    ipAddress:req.connection.remoteAddress,
+                                    date:Date.now()
+                                };
+                                var timeLine = new TimeLine(time);
+                                timeLine.save(function (err, data) {
+                                    res.json(materialType);
+                                });
                             }
                         });
                     }
@@ -147,7 +166,16 @@ exports.delete = function (req, res) {
                                     message: errorHandler.getErrorMessage(err)
                                 });
                             } else {
-                                res.json(material);
+                                var time = {
+                                    message:'Түүхий эд устгасан',
+                                    user:req.user,
+                                    ipAddress:req.connection.remoteAddress,
+                                    date:Date.now()
+                                };
+                                var timeLine = new TimeLine(time);
+                                timeLine.save(function (err, data) {
+                                    res.json(material);
+                                });
                             }
                         });
                     }

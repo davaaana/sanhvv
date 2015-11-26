@@ -7,5 +7,10 @@ angular.module('users.admin').run(['Menus',
       title: 'Хэрэглэгчийн удирдлага',
       state: 'admin.users'
     });
+
+      Menus.addSubMenuItem('topbar', 'admin', {
+          title: 'Цагийн шугам',
+          state: 'admin.timeLine'
+      });
   }
 ]);

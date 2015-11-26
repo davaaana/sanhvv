@@ -20,6 +20,7 @@ angular.module('product').controller('ProductController', ['$scope', '$statePara
               type:BootstrapDialog.TYPE_SUCCESS,
               message: 'Амжилттай хадгаллаа'
           });
+          GlobalFunction.formClear();
         // Clear form fields
         $scope.name = '';
       }, function (errorResponse) {
@@ -66,6 +67,7 @@ angular.module('product').controller('ProductController', ['$scope', '$statePara
               type:BootstrapDialog.TYPE_SUCCESS,
               message: 'Амжилттай хадгаллаа'
           });
+
       }, function (errorResponse) {
         $scope.error = errorResponse.data.message;
           BootstrapDialog.show({

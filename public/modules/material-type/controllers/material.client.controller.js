@@ -23,6 +23,7 @@ angular.module('materialType').controller('MaterialTypeController', ['$scope', '
               type:BootstrapDialog.TYPE_SUCCESS,
               message: 'Амжилттай хадгаллаа'
           });
+          GlobalFunction.formClear();
         $scope.name = '';
       }, function (errorResponse) {
         $scope.error = errorResponse.data.message;

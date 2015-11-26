@@ -21,3 +21,12 @@ var ApplicationConfiguration = (function () {
     registerModule: registerModule
   };
 })();
+
+var GlobalFunction = {
+    formClear: function () {
+        $('input[type="text"]').val('');
+        $('input[type="number"]').val('');
+        $('input[type="email"]').val('');
+        $('textarea').val('');
+    }
+}

@@ -6,6 +6,7 @@
 var path = require('path'),
   mongoose = require('mongoose'),
     MaterialType = mongoose.model('MaterialType'),
+    TimeLine = mongoose.model('TimeLine'),
   errorHandler = require(path.resolve('./app/controller/errors.server.controller'));
 
 /**
@@ -21,7 +22,17 @@ exports.create = function (req, res) {
         message: errorHandler.getErrorMessage(err)
       });
     } else {
-      res.json(materialType);
+        var time = {
+            message:'Материалын төрөл нэмсэн',
+            user:req.user,
+            ipAddress:req.connection.remoteAddress,
+            date:Date.now()
+        };
+        var timeLine = new TimeLine(time);
+        timeLine.save(function (err, data) {
+            res.json(materialType);
+        });
+
     }
   });
 };
@@ -46,7 +57,16 @@ exports.update = function (req, res) {
         message: errorHandler.getErrorMessage(err)
       });
     } else {
-      res.json(materialType);
+        var time = {
+            message:'Материалын төрөл зассан',
+            user:req.user,
+            ipAddress:req.connection.remoteAddress,
+            date:Date.now()
+        };
+        var timeLine = new TimeLine(time);
+        timeLine.save(function (err, data) {
+            res.json(materialType);
+        });
     }
   });
 };
@@ -63,7 +83,16 @@ exports.delete = function (req, res) {
         message: errorHandler.getErrorMessage(err)
       });
     } else {
-      res.json(materialType);
+        var time = {
+            message:'Материалын төрөл устгасан',
+            user:req.user,
+            ipAddress:req.connection.remoteAddress,
+            date:Date.now()
+        };
+        var timeLine = new TimeLine(time);
+        timeLine.save(function (err, data) {
+            res.json(materialType);
+        });
     }
   });
 };

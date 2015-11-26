@@ -23,3 +23,16 @@ angular.module('users.admin').factory('Admin', ['$resource',
     });
   }
 ]);
+
+
+angular.module('users.admin').factory('TimeLine', ['$resource',
+    function ($resource) {
+        return $resource('api/timeLine/:tlid', {
+            tlid: '@_id'
+        }, {
+            update: {
+                method: 'PUT'
+            }
+        });
+    }
+]);

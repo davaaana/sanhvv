@@ -8,6 +8,7 @@ var path = require('path'),
     InvoiceDebit = mongoose.model('InvoiceDebit'),
     Product = mongoose.model('Product'),
     Unit = mongoose.model('Unit'),
+    TimeLine = mongoose.model('TimeLine'),
     Util = require('util'),
     errorHandler = require(path.resolve('./app/controller/errors.server.controller'));
 var async = require('async');
@@ -38,6 +39,17 @@ exports.create = function (req, res) {
                     });
                 });
             })
+        }, function (callback) {
+            var time = {
+                message:'Бэлэн бүтээгдэхүүний зарлага хэмсэн',
+                user:req.user,
+                ipAddress:req.connection.remoteAddress,
+                date:Date.now()
+            };
+            var timeLine = new TimeLine(time);
+            timeLine.save(function (err, data) {
+                callback();
+            });
         }
     ], function (err, result) {
         if (Util.isNullOrUndefined(err)) {
@@ -99,6 +111,17 @@ exports.delete = function (req, res) {
                         callback(null);
                     });
                 });
+            });
+        }, function (callback) {
+            var time = {
+                message:'Бэлэн бүтээгдэхүүний зарлага устгасан',
+                user:req.user,
+                ipAddress:req.connection.remoteAddress,
+                date:Date.now()
+            };
+            var timeLine = new TimeLine(time);
+            timeLine.save(function (err, data) {
+                callback();
             });
         }
     ], function (err, result) {

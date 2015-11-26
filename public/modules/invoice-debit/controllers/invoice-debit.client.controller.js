@@ -61,7 +61,7 @@ angular.module('invoiceDebit').controller('InvoiceDebitController', ['$scope', '
                         type:BootstrapDialog.TYPE_SUCCESS,
                         message: 'Амжилттай хадгаллаа'
                     });
-
+                    GlobalFunction.formClear();
                     // Clear form fields
                     $scope.name = '';
                 }, function (errorResponse) {

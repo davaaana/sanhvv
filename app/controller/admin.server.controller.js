@@ -6,6 +6,7 @@
 var path = require('path'),
   mongoose = require('mongoose'),
   User = mongoose.model('User'),
+  TimeLine = mongoose.model('TimeLine'),
   errorHandler = require(path.resolve('./app/controller/errors.server.controller'));
 
 /**
@@ -91,3 +92,9 @@ exports.userByID = function (req, res, next, id) {
     next();
   });
 };
+
+exports.getTimeLine = function (req, res) {
+    TimeLine.find().populate('user','displayName').exec(function (err, result) {
+        res.json(result);
+    })
+}

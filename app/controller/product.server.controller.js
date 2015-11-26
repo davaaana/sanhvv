@@ -21,7 +21,16 @@ exports.create = function (req, res) {
                 message: errorHandler.getErrorMessage(err)
             });
         } else {
-            res.json(product);
+            var time = {
+                message:'Бэлэн бүтээгдэхүүн нэмсэн',
+                user:req.user,
+                ipAddress:req.connection.remoteAddress,
+                date:Date.now()
+            };
+            var timeLine = new TimeLine(time);
+            timeLine.save(function (err, data) {
+                res.json(product);
+            });
         }
     });
 };
@@ -46,7 +55,16 @@ exports.update = function (req, res) {
                 message: errorHandler.getErrorMessage(err)
             });
         } else {
-            res.json(product);
+            var time = {
+                message:'Бэлэн бүтээгдэхүүн зассан',
+                user:req.user,
+                ipAddress:req.connection.remoteAddress,
+                date:Date.now()
+            };
+            var timeLine = new TimeLine(time);
+            timeLine.save(function (err, data) {
+                res.json(product);
+            });
         }
     });
 };
@@ -63,7 +81,16 @@ exports.delete = function (req, res) {
                 message: errorHandler.getErrorMessage(err)
             });
         } else {
-            res.json(product);
+            var time = {
+                message:'Бэлэн бүтээгдэхүүн устгасан',
+                user:req.user,
+                ipAddress:req.connection.remoteAddress,
+                date:Date.now()
+            };
+            var timeLine = new TimeLine(time);
+            timeLine.save(function (err, data) {
+                res.json(product);
+            });
         }
     });
 };

@@ -8,6 +8,7 @@ var path = require('path'),
     Material = mongoose.model('InvMaterialCredit'),
     Product = mongoose.model('Product'),
     MaterialType = mongoose.model('MaterialType'),
+    TimeLine = mongoose.model('TimeLine'),
     Unit = mongoose.model('Unit'),
     Util = require('util'),
     errorHandler = require(path.resolve('./app/controller/errors.server.controller'));
@@ -57,7 +58,18 @@ exports.create = function (req, res) {
                         });
                     });
                 });
-            }
+            }, function (callback) {
+            var time = {
+                message:'Бэлэн бүтээгдэхүүний орлого хэмсэн',
+                user:req.user,
+                ipAddress:req.connection.remoteAddress,
+                date:Date.now()
+            };
+            var timeLine = new TimeLine(time);
+            timeLine.save(function (err, data) {
+               callback();
+            });
+        }
         ], function (err, result) {
             if (Util.isNullOrUndefined(err)) {
                 res.json(invMaterial);
@@ -144,6 +156,17 @@ exports.delete = function (req, res) {
                         callback(null);
                     });
                 });
+            });
+        }, function (callback) {
+            var time = {
+                message:'Бэлэн бүтээгдэхүүний орлого устгасан',
+                user:req.user,
+                ipAddress:req.connection.remoteAddress,
+                date:Date.now()
+            };
+            var timeLine = new TimeLine(time);
+            timeLine.save(function (err, data) {
+                callback();
             });
         }
         ], function (err, result) {

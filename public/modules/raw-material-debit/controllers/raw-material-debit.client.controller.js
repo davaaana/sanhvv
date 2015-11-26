@@ -34,7 +34,7 @@ angular.module('rawMaterialDebit').controller('RawMaterialDebitController', ['$s
               type:BootstrapDialog.TYPE_SUCCESS,
               message: 'Амжилттай хадгаллаа'
           });
-
+          GlobalFunction.formClear();
         // Clear form fields
         $scope.name = '';
       }, function (errorResponse) {
