@@ -6,7 +6,6 @@ angular.module('users.admin').controller('UserListController', ['$scope', '$filt
       $scope.users = data;
       $scope.buildPager();
     });
-    $('#category').modal('show');
     $scope.buildPager = function () {
       $scope.pagedItems = [];
       $scope.itemsPerPage = 15;

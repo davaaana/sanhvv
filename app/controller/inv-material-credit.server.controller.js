@@ -184,13 +184,32 @@ exports.delete = function (req, res) {
  * List of Articles
  */
 exports.lists = function (req, res) {
-    Material.find().sort('-createdDate').populate('user', 'displayName').populate('measure.materialType', 'name _id').populate('measure.unit', 'name _id').populate('unit', 'name _id').populate('product', 'name _id').exec(function (err, material) {
+    var filter;
+    try{
+        filter = JSON.parse(req.query.filter);
+    }catch(e){
+        filter = req.query.filter;
+    }
+    var skip = filter.limit * (filter.page-1);
+    Material.find().limit(filter.limit).
+    skip(skip).sort('-createdDate').
+    populate('user', 'displayName').
+    populate('unit', 'name qty').
+    populate('measure.materialType', 'name _id').
+    populate('measure.unit', 'name _id').
+    populate('product', 'name _id').exec(function (err, material) {
         if (err) {
             return res.status(400).send({
                 message: errorHandler.getErrorMessage(err)
             });
         } else {
-            res.json(material);
+            Material.count().exec(function (error, count) {
+                res.json({
+                    material:material,
+                    pages:count,
+                    page:filter.page
+                });
+            });
         }
     });
 };

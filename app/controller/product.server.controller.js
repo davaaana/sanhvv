@@ -6,6 +6,7 @@
 var path = require('path'),
     mongoose = require('mongoose'),
     Product = mongoose.model('Product'),
+    TimeLine = mongoose.model('TimeLine'),
     errorHandler = require(path.resolve('./app/controller/errors.server.controller'));
 
 /**

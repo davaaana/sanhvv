@@ -13,7 +13,6 @@
       <td>Төлбөр төлсөн эсэх</td>
       <td>Тайлбар</td>
       <td>Орлого хийсэн өдөр</td>
-      <td>Засах</td>
       <td>Устгах</td>
     </thead>
     <tbody>
@@ -27,10 +26,6 @@
       <td>{{material.isPayment == true ? 'Төлсөн':'Төлөгдөөгүй'}}</td>
       <td>{{material.description}}</td>
       <td>{{material.date | date:'yyyy/MM/dd'}}</td>
-      <td><a class="btn btn-primary" data-ui-sref="rawMaterialDebit.edit({id: material._id})">
-        <i class="glyphicon glyphicon-edit"></i>
-      </a>
-        </td>
       <td>
         <a class="btn btn-primary" data-ng-click="remove(material);">
           <i class="glyphicon glyphicon-trash"></i>
@@ -39,4 +34,5 @@
     </tr>
     </tbody>
   </table>
+    <pagination boundary-links="true" max-size="8" items-per-page="pageLimit" total-items="pageTotal" ng-model="page" ng-change="pageChanged(page)"></pagination>
 </section>

@@ -4,7 +4,12 @@
 angular.module('invoiceDebit').controller('InvoiceDebitController', ['$scope', '$stateParams', '$location', 'Authentication', 'InvoiceDebitSrv', '$http',
     function ($scope, $stateParams, $location, Authentication, InvoiceDebitSrv, $http) {
         $scope.authentication = Authentication;
-        $scope.date = new Date();
+        $scope.data = {};
+        $scope.data.date = new Date();
+
+        $scope.page = 1;
+        $scope.pageLimit = 5;
+        $scope.pageTotal = 0;
 
         $http.get('api/product').success(function (res) {
             $scope.products = res;
@@ -35,16 +40,15 @@ angular.module('invoiceDebit').controller('InvoiceDebitController', ['$scope', '
         $scope.create = function () {
             // Create new Article object
             var invoiceDebit = new InvoiceDebitSrv({
-                date: this.date,
-                product: this.product,
-                isPayment: this.isPayment,
-                invType: this.invType,
-                qty: this.qty,
-                description: this.description,
-                amount: this.amount,
-                unit: this.unit
+                date: this.data.date,
+                product: this.data.product,
+                isPayment: this.data.isPayment,
+                invType: this.data.invType,
+                qty: this.data.qty,
+                description: this.data.description,
+                amount: this.data.amount,
+                unit: this.data.unit
             });
-            console.log($scope.getQty(this.unit, this.qty));
             var valid = true;
             for (var i in $scope.products) {
                 if ($scope.products[i].qty < $scope.getQty(this.unit, this.qty)) {
@@ -61,7 +65,7 @@ angular.module('invoiceDebit').controller('InvoiceDebitController', ['$scope', '
                         type:BootstrapDialog.TYPE_SUCCESS,
                         message: 'Амжилттай хадгаллаа'
                     });
-                    GlobalFunction.formClear();
+                   $scope.data ={};
                     // Clear form fields
                     $scope.name = '';
                 }, function (errorResponse) {
@@ -105,9 +109,19 @@ angular.module('invoiceDebit').controller('InvoiceDebitController', ['$scope', '
             });
         };
 
+        $scope.pageChanged = function (page) {
+            InvoiceDebitSrv.get({filter: {page: page, limit: $scope.pageLimit}, isArray: false}, function (res) {
+                $scope.invoiceDebits = res.material;
+                $scope.pageTotal = res.pages;
+            });
+        };
+
         // Find a list of Articles
         $scope.find = function () {
-            $scope.invoiceDebits = InvoiceDebitSrv.query();
+            InvoiceDebitSrv.get({filter: {page: $scope.page, limit: $scope.pageLimit}, isArray: false}, function (res) {
+                $scope.invoiceDebits = res.material;
+                $scope.pageTotal = res.pages;
+            });
         };
 
         // Find existing Article

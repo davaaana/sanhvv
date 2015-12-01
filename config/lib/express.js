@@ -15,6 +15,7 @@ var config = require('../config'),
   methodOverride = require('method-override'),
   cookieParser = require('cookie-parser'),
   helmet = require('helmet'),
+  util = require('util'),
   flash = require('connect-flash'),
   consolidate = require('consolidate'),
   path = require('path');

@@ -9,6 +9,12 @@ angular.module('rawMaterialDebit').factory('RawMaterialDebitSrv', ['$resource',
       update: {
         method: 'PUT'
       }
+    },{
+        query:{
+            method:'get',
+            isArray:false,
+            cancellable:true
+        }
     });
   }
 ]);

@@ -5,6 +5,7 @@
  */
 var mongoose = require('mongoose'),
     Schema = mongoose.Schema,
+    Paging = require('mongoose-paginate'),
     validator = require('validator');
 
 var validateLocalStrategyNumber = function (qty) {
@@ -49,4 +50,5 @@ var RawMaterialDebitSchema = new Schema(
     }
 );
 
+RawMaterialDebitSchema.plugin(Paging);
 mongoose.model('RawMaterialDebit', RawMaterialDebitSchema);

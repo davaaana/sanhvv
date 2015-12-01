@@ -9,7 +9,7 @@
           <label class="control-label" for="date">Огноо</label>
           <div class="controls" data-ng-init="dp.opened = false">
               <p class="input-group">
-                  <input type="text" id="date" class="form-control" datepicker-popup="yyyy-MM-dd" ng-model="date" is-open="dp.opened"  datepicker-options="yyyy-MM-dd" ng-required="true" close-text="Close" />
+                  <input type="text" id="date" class="form-control" datepicker-popup="yyyy-MM-dd" ng-model="data.date" is-open="dp.opened"  datepicker-options="yyyy-MM-dd" ng-required="true" close-text="Close" />
               <span class="input-group-btn">
                 <button type="button" class="btn btn-default" ng-click="dp.opened = true"><i class="glyphicon glyphicon-calendar"></i></button>
               </span>
@@ -19,7 +19,7 @@
         <div class="form-group">
           <label class="control-label" for="materialType">Түүхий эд</label>
           <div class="controls">
-            <select name="materialType" type="datetime" data-ng-model="materialType" id="materialType" class="form-control" placeholder="Түүхий эд">
+            <select name="materialType" type="datetime" data-ng-model="data.materialType" id="materialType" class="form-control" placeholder="Түүхий эд">
               <option data-ng-repeat="type in materialTypes" value="{{type._id}}">{{type.name}}</option>
             </select>
           </div>
@@ -28,7 +28,7 @@
         <div class="form-group">
           <label class="control-label" for="unit">Хэмжих нэгж</label>
           <div class="controls">
-            <select name="unit" data-ng-model="unit" id="unit" class="form-control" placeholder="Хэмжих нэгж">
+            <select name="unit" data-ng-model="data.unit" id="unit" class="form-control" placeholder="Хэмжих нэгж">
               <option data-ng-repeat="u in units" value="{{u._id}}">{{u.name}}</option>
             </select>
           </div>
@@ -37,7 +37,7 @@
         <div class="form-group">
           <label class="control-label" for="qty">Хэмжээ</label>
           <div class="controls">
-            <input name="qty" type="number" data-ng-model="qty" id="qty" ng-change="total = amount * qty" class="form-control" placeholder="Хэмжээ"/>
+            <input name="qty" type="number" data-ng-model="data.qty" id="qty" ng-change="total = data.amount * data.qty" class="form-control" placeholder="Хэмжээ"/>
           </div>
         </div>
 
@@ -46,7 +46,7 @@
         <div class="form-group">
           <label class="control-label" for="amount">Нэгж үнэ</label>
           <div class="controls">
-            <input name="amount" type="number" data-ng-model="amount" ng-change="total = amount * qty" id="amount" class="form-control" placeholder="Мөнгөн дүн"/>
+            <input name="amount" type="number" data-ng-model="data.amount" ng-change="total = data.amount * data.qty" id="amount" class="form-control" placeholder="Мөнгөн дүн"/>
           </div>
         </div>
 
@@ -60,7 +60,7 @@
         <div class="form-group">
           <label class="control-label" for="description">Тайлбар</label>
           <div class="controls">
-            <input name="description" type="text" data-ng-model="description" id="description" class="form-control" placeholder="Тайлбар"/>
+            <input name="description" type="text" data-ng-model="data.description" id="description" class="form-control" placeholder="Тайлбар"/>
           </div>
         </div>
 

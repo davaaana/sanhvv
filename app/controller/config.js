@@ -7,10 +7,11 @@ module.exports = {
     url: 'http://localhost:3000',
     jsonParse: function (data) {
         try {
-            return JSON.parse(data);
+            data = JSON.parse(data);
         } catch (e) {
-            return data;
+            data = data;
         }
+        return data;
     }
 }
 

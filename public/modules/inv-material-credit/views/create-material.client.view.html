@@ -8,7 +8,7 @@
                 <label class="control-label" for="date">Огноо</label>
                 <div class="controls" data-ng-init="dp.opened = false">
                     <p class="input-group">
-                        <input type="text" id="date" class="form-control" datepicker-popup="yyyy-MM-dd" ng-model="date" is-open="dp.opened"  datepicker-options="yyyy-MM-dd" ng-required="true" close-text="Close" />
+                        <input type="text" id="date" class="form-control" datepicker-popup="yyyy-MM-dd" ng-model="data.date" is-open="dp.opened"  datepicker-options="yyyy-MM-dd" ng-required="true" close-text="Close" />
               <span class="input-group-btn">
                 <button type="button" class="btn btn-default" ng-click="dp.opened = true"><i class="glyphicon glyphicon-calendar"></i></button>
               </span>
@@ -19,14 +19,14 @@
                 <label class="control-label" for="product">Бэлэн бүтээгдэхүүний нэр</label>
 
                 <div class="controls">
-                    <select class="form-control" data-ng-model="product" id="product" ng-options="p.name for p in products track by p._id"></select>
+                    <select class="form-control" data-ng-model="data.product" id="product" ng-options="p.name for p in products track by p._id"></select>
                 </div>
             </div>
             <div class="form-group">
                 <label class="control-label" for="punit">Жин</label>
 
                 <div class="controls">
-                    <select class="form-control" data-ng-model="punit" id="punit" ng-options="u.name for u in units track by u._id"></select>
+                    <select class="form-control" data-ng-model="data.unit" id="punit" ng-options="u.name for u in units track by u._id"></select>
                 </div>
             </div>
 
@@ -34,7 +34,7 @@
                 <label class="control-label" for="pqty">Тоо ширхэг</label>
 
                 <div class="controls">
-                    <input  class="form-control"type="number" data-ng-model="pqty" id="pqty" placeholder="Тоо ширхэг">
+                    <input  class="form-control"type="number" data-ng-model="data.qty" id="pqty" placeholder="Тоо ширхэг">
                 </div>
             </div>
         </div>

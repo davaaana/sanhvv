@@ -23,7 +23,10 @@ module.exports = {
                 'public/lib/angular-file-upload/angular-file-upload.js',
                 'public/lib/angular-block-ui/dist/angular-block-ui.min.js',
                 'public/lib/bootstrap3-dialog/dist/js/bootstrap-dialog.min.js',
-                'public/lib/bootstrap3-dialog/dist/js/bootstrap-dialog.js'
+                'public/lib/bootstrap3-dialog/dist/js/bootstrap-dialog.js',
+                'public/lib/highcharts-ng/dist/highcharts-ng.js',
+                'public/lib/highcharts/highcharts.src.js'
+
 
             ],
             tests: ['public/lib/angular-mocks/angular-mocks.js']

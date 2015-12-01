@@ -5,10 +5,11 @@ angular.module('product').controller('ProductController', ['$scope', '$statePara
   function ($scope, $stateParams, $location, Authentication, ProductSrv) {
     $scope.authentication = Authentication;
     // Create new Article
+      $scope.data = {};
     $scope.create = function () {
       // Create new Article object
       var product = new ProductSrv({
-        name: this.name
+        name: this.data.name
       });
 
       // Redirect after save
@@ -20,7 +21,7 @@ angular.module('product').controller('ProductController', ['$scope', '$statePara
               type:BootstrapDialog.TYPE_SUCCESS,
               message: 'Амжилттай хадгаллаа'
           });
-          GlobalFunction.formClear();
+          $scope.data = {};
         // Clear form fields
         $scope.name = '';
       }, function (errorResponse) {

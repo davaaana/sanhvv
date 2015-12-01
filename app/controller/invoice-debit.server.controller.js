@@ -138,13 +138,30 @@ exports.delete = function (req, res) {
  * List of Articles
  */
 exports.lists = function (req, res) {
-    InvoiceDebit.find().sort('-createdDate').populate('user', 'displayName').populate('product', 'name qty _id').populate('unit', 'name qty').exec(function (err, invoiceDebit) {
+    var filter;
+    try{
+        filter = JSON.parse(req.query.filter);
+    }catch(e){
+        filter = req.query.filter;
+    }
+    var skip = filter.limit * (filter.page-1);
+    InvoiceDebit.find().limit(filter.limit).
+    skip(skip).sort('-createdDate').
+    populate('user', 'displayName').
+    populate('product', 'name qty _id').
+    populate('unit', 'name qty').exec(function (err, material) {
         if (err) {
             return res.status(400).send({
                 message: errorHandler.getErrorMessage(err)
             });
         } else {
-            res.json(invoiceDebit);
+            InvoiceDebit.count().exec(function (error, count) {
+                res.json({
+                    material:material,
+                    pages:count,
+                    page:filter.page
+                });
+            });
         }
     });
 };

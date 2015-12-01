@@ -9,11 +9,10 @@
         <td>Бүтээгдэхүүний нэр</td>
         <td>Хэмжих нэгж</td>
         <td>Тоо хэмжээ</td>
-        <td>Засах</td>
         <td>Устгах</td>
         </thead>
         <tbody data-ng-repeat="material in rawMaterialDebits" data-ng-init="items_display=[];indexx = $index">
-        <tr class="list-group" data-ng-click="items_display[indexx] = !items_display[indexx]">
+        <tr class="list-group" ng-class="{success: items_display[indexx] == true}" data-ng-click="items_display[indexx] = !items_display[indexx]">
             <td>
                 <span data-ng-hide="items_display[indexx]">+</span>
                 <span data-ng-show="items_display[indexx]">-</span>
@@ -22,17 +21,13 @@
             <td>{{material.product.name}}</td>
             <td>{{material.unit.name}}</td>
             <td>{{material.qty}}</td>
-            <td><a class="btn btn-primary" data-ui-sref="rawMaterialDebit.edit({id: material._id})">
-                <i class="glyphicon glyphicon-edit"></i>
-            </a>
-            </td>
             <td>
                 <a class="btn btn-primary" data-ng-click="remove(material);">
                     <i class="glyphicon glyphicon-trash"></i>
                 </a></td>
             </td>
         </tr>
-        <tr style="font-weight: bold" data-ng-show="items_display[indexx]">
+        <tr  ng-class="{success: items_display[indexx] == true}" style="font-weight: bold" data-ng-show="items_display[indexx]">
             <td></td>
             <td>
                 Материалын төрөл
@@ -40,12 +35,13 @@
             <td>Хэмжих нэгж</td>
             <td>Тоо хэмжээ</td>
         </tr>
-        <tr data-ng-show="items_display[indexx]" data-ng-repeat="measure in material.measure">
-            <td></td>
+        <tr  ng-class="{success: items_display[indexx] == true}" data-ng-show="items_display[indexx]" data-ng-repeat="measure in material.measure">
+            <td>№ {{$index+1}}</td>
             <td>{{measure.materialType.name}}</td>
             <td>{{measure.unit.name}}</td>
             <td>{{measure.qty}}</td>
         </tr>
         </tbody>
     </table>
+    <pagination boundary-links="true" max-size="8" items-per-page="pageLimit" total-items="pageTotal" ng-model="page" ng-change="pageChanged(page)"></pagination>
 </section>
